@@ -18,8 +18,8 @@
     </q-card-section>
 
     <q-card-section class="q-pt-none fnt-size-14 text-gray-10">
-      <span class="fnt-size-16 fnt-weight-600">Descrição:</span> {{ detail.slice(0, 20) }} ...
-      <div class="fnt-size-14 fnt-weight-600">{{ info.slice(0, 20) }} ...</div>
+      <span class="fnt-size-16 fnt-weight-600">Descrição:</span> {{ detail.slice(0, 30) }} ...
+      <div class="fnt-size-14 fnt-weight-600">{{ info.slice(0, 30) }} ...</div>
     </q-card-section>
 
     <q-card-section class="card-footer q-pt-md flex justify-between items-center text-gray-10">
