@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-// import { Notify } from 'quasar';
 import products from '../../constants/products.json'
 
 export const useProductsStore = defineStore('products', {

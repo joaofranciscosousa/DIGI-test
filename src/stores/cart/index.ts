@@ -1,24 +1,12 @@
 import { defineStore } from 'pinia'
-// import { Notify } from 'quasar';
-
-interface Product {
-  name: string
-  price: number
-}
-interface CartItem {
-  product: Product
-  quantity: number
-}
-
-// Definindo a tipagem para o estado
-interface CartState {
-  cart: CartItem[]
-}
 
 export const useCartStore = defineStore('cart', {
-  state: (): CartState => ({
-    cart: [],
-  }),
+  state: (): CartState => {
+    const storedCart = localStorage.getItem('cart')
+    return {
+      cart: storedCart ? JSON.parse(storedCart) : [],
+    }
+  },
   getters: {
     getCart: (state) => state.cart,
   },
@@ -30,25 +18,43 @@ export const useCartStore = defineStore('cart', {
       } else {
         this.cart.push({ product: item, quantity: 1 })
       }
-      console.log('this.cart', this.cart)
+      this.saveCartToLocalStorage()
     },
-    removeProductFromCart(item: CartItem) {
-      this.cart = this.cart.filter((product) => product.product.name !== item.product.name)
-    },
-    updateItemQuantity(item: CartItem, quantity: number) {
-      const cartItem = this.cart.find((product) => product.product.name === item.product.name)
+    removeProductFromCart(item: Product, quantity: number) {
+      const cartItem = this.cart.find((product) => product.product.name === item.name)
+
       if (cartItem) {
-        item.quantity = quantity
-        if (item.quantity <= 0) {
-          this.removeProductFromCart(item)
+        cartItem.quantity -= quantity
+
+        if (cartItem.quantity <= 0) {
+          this.cart = this.cart.filter((product) => product.product.name !== item.name)
         }
       }
+
+      this.saveCartToLocalStorage()
+    },
+    updateItemQuantity(item: Product, quantity: number) {
+      const cartItem = this.cart.find((product) => product.product.name === item.name)
+      if (cartItem) {
+        cartItem.quantity = quantity
+        if (cartItem.quantity <= 0) {
+          this.removeProductFromCart(item, 1)
+        }
+      }
+      this.saveCartToLocalStorage()
     },
     clearCart() {
       this.cart = []
+      this.saveCartToLocalStorage()
     },
     getTotal() {
-      return this.cart.reduce((total, item) => total + item.product.price * item.quantity, 0)
+      return this.cart.reduce(
+        (total, item) => total + Number(item.product.price) * item.quantity,
+        0,
+      )
+    },
+    saveCartToLocalStorage() {
+      localStorage.setItem('cart', JSON.stringify(this.cart))
     },
   },
 })
