@@ -8,6 +8,7 @@ export const useProductsStore = defineStore('products', {
   }),
   getters: {
     getProducts: (state) => state.Products,
+    getHeroProduct: (state) => state.Products.find(({ hero }) => typeof hero !== 'undefined'),
   },
   actions: {},
 })
