@@ -1,8 +1,8 @@
 <template>
   <q-page class="q-pa-lg" style="background-color: #f0f0f0">
     <header-back-handler title="Destaque do mês" :customTitleClass="'fnt-size-28 fnt-weight-700'" />
-    <div class="row q-col-gutter-md q-mb-lg">
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="row q-col-gutter-md q-mb-lg justify-center">
+      <div class="col-10">
         <product-card
           customClass="full-width"
           :name="getHeroProduct?.name ?? ''"
@@ -51,7 +51,6 @@ export default defineComponent({
     HeaderBackHandler,
     ProductCard,
   },
-  data() {},
   computed: {
     ...mapState(useProductsStore, ['getProducts', 'getHeroProduct']),
   },

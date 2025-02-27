@@ -2,13 +2,14 @@
   <div class="row flex">
     <div v-if="backhandler" class="q-mr-md">
       <q-btn
-        class="btn-outline bg-white full-width fnt-size-14 fnt-weight-700"
+        class="btn-outline bg-white full-width fnt-size-14 fnt-weight-700 q-mb-sm"
         no-caps
+        label="Voltar"
+        icon="arrow_back"
+        size="16px"
         :to="backHandlerPath"
         @click="backHandlerPath ? undefined : $router.go(-1)"
-      >
-        <q-icon name="o_arrow_circle_left" size="18px" class="q-mr-sm" />Voltar
-      </q-btn>
+      />
     </div>
     <span :class="customTitleClass"> {{ title }} </span>
   </div>

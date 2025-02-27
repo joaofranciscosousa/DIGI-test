@@ -1,8 +1,18 @@
 <template>
   <q-card :class="customClass" class="product-card">
-    <q-img :src="image" fit="cover" />
+    <q-card-section @click="goToProduct(name)" class="cursor-pointer">
+      <q-img
+        v-if="isValidImage"
+        :src="image"
+        alt="logo"
+        fit="contain"
+        @error="() => errorImage()"
+        class="product-image"
+      />
+      <q-img v-else :src="noImageSrc" alt="logo" fit="contain" class="product-image" />
+    </q-card-section>
 
-    <q-card-section>
+    <q-card-section @click="goToProduct(name)" class="cursor-pointer">
       <div class="text-h6 text-gray-10">{{ name }}</div>
       <div class="text-subtitle2 text-gray-8">{{ hero }}</div>
     </q-card-section>
@@ -22,11 +32,10 @@
         <q-btn
           push
           icon="add"
-          color="primary"
           label="Adicionar ao carrinho"
-          class="full-width q-pa-sm q-px-md"
+          class="full-width q-pa-sm q-px-md button-add-to-cart"
           dense
-          @click="addProductToCart({ name, price })"
+          @click="addProductToCart({ name, price: String(price), detail })"
         />
       </div>
     </q-card-section>
@@ -37,6 +46,9 @@
 import { defineComponent } from 'vue'
 import { mapActions } from 'pinia'
 import { useCartStore } from 'src/stores/cart'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import noImageCard from 'src/assets/no_image.jpg'
 
 export default defineComponent({
   name: 'productCard',
@@ -74,35 +86,49 @@ export default defineComponent({
       default: '',
     },
   },
+  data() {
+    const isValidImage: boolean = true
+
+    return {
+      isValidImage,
+      noImageSrc: noImageCard,
+    }
+  },
   methods: {
     ...mapActions(useCartStore, ['addProductToCart']),
+    errorImage() {
+      this.isValidImage = false
+    },
+    goToProduct(product_name: string) {
+      this.$router.push({
+        name: 'product',
+        params: {
+          product_name,
+        },
+      })
+    },
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.text-gray-10 {
-  color: $grey-10;
-}
-.text-gray-9 {
-  color: $grey-9;
-}
-.text-gray-8 {
-  color: $grey-8;
-}
 .product-card {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.product-card img {
+.product-image {
   width: 100%;
-  height: 200px;
+  height: 300px;
 }
 .q-card-section {
   flex-grow: 1;
 }
 .card-footer {
   margin-top: auto;
+}
+.button-add-to-cart {
+  background-color: $red-digi;
+  color: #fff;
 }
 </style>

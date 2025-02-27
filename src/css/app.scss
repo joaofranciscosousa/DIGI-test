@@ -15,3 +15,17 @@ $weights: 400, 500, 600, 700;
     font-weight: #{$weight};
   }
 }
+
+.text-gray-10 {
+  color: $grey-10;
+}
+.text-gray-9 {
+  color: $grey-9;
+}
+.text-gray-8 {
+  color: $grey-8;
+}
+
+.bg-digi {
+  background-color: $red-digi;
+}
