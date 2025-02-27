@@ -4,7 +4,9 @@
       <q-toolbar>
         <q-toolbar-title> Loja Digital DIGI </q-toolbar-title>
 
-        <div><q-icon name="shopping_cart" size="30px" /></div>
+        <div>
+          <q-icon name="shopping_cart" size="30px" />
+        </div>
       </q-toolbar>
     </q-header>
 

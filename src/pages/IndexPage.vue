@@ -1,55 +1,28 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="q-pa-lg" style="background-color: #f0f0f0">
+    <header-back-handler title="Produtos" />
+    <div v-for="(product, indexProduct) in getProducts" :key="indexProduct">
+      <product-card :name="product.name" :detail="product.detail" :image="product.image" />
+    </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import type { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
+import { defineComponent } from 'vue'
+import HeaderBackHandler from 'src/components/header/HeaderBackHandler.vue'
+import ProductCard from 'src/components/productCard/index.vue'
+import { mapState } from 'pinia'
+import { useProductsStore } from 'src/stores/products'
 
 export default defineComponent({
   name: 'IndexPage',
-
   components: {
-    ExampleComponent
+    HeaderBackHandler,
+    ProductCard,
   },
-
-  data () {
-    const todos: Todo[] = [
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ];
-
-    const meta: Meta = {
-      totalCount: 1200
-    };
-
-    return { todos, meta };
-  }
-});
+  data() {},
+  computed: {
+    ...mapState(useProductsStore, ['getProducts']),
+  },
+})
 </script>

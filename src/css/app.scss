@@ -1,1 +1,17 @@
 // app global css in SCSS form
+
+// FONT SIZE
+@for $i from 12 through 50 {
+  .fnt-size-#{$i} {
+    font-size: #{$i}px;
+  }
+}
+
+//FONT WEIGHT
+$weights: 400, 500, 600, 700;
+
+@each $weight in $weights {
+  .fnt-weight-#{$weight} {
+    font-weight: #{$weight};
+  }
+}
